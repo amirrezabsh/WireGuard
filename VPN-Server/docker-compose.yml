@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000            # Adjust to match your user ID
+      - PGID=1000            # Adjust to match your group ID
+      - TZ=Etc/UTC           # Set your timezone
+      - SERVERURL=<VPN Server IP or Domain Name>  # Replace with your server's public IP or domain
+      - SERVERPORT=51820     # WireGuard port
+      - PEERS=<Number of Peers (Clients)>              # Number of clients to generate configs for
+    volumes:
+      - ./config:/config
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv6.conf.all.forwarding=1
+    restart: always
+
