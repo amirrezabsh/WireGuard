@@ -3,54 +3,7 @@
 Follow these steps to deploy the WireGuard VPN server using the provided `docker-compose.yml` file:
 
 ---
-
-### **1. Prepare the Host Server**
-
-1. **Update System Packages**
-   Ensure your server is up-to-date:
-   ```bash
-   sudo apt update && sudo apt upgrade -y
-   ```
-
-2. **Install Docker and Docker Compose** (on VPN server only!)
-   #### Step 1: Install Docker
-   Follow the official Docker documentation to install Docker on Ubuntu:
-   [Docker Installation Guide for Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
-
-   Alternatively, you can install Docker with the following commands:
-   ```bash
-   sudo apt-get install ca-certificates curl
-   sudo install -m 0755 -d /etc/apt/keyrings
-   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-   sudo chmod a+r /etc/apt/keyrings/docker.asc
-   
-   # Add the repository to Apt sources:
-   echo \
-     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-     $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-   sudo apt-get update
-   ```
-
-   #### Step 2: Install the Docker packages.
-   To install the latest version, run:
-   ```bash
-   sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-   ```
-   
-   Verify that the installation is successful by running the `hello-world` image:
-   ```bash
-   sudo docker run hello-world
-   ```
-
-
-   #### Step 3: Install docker-compose:
-   ```bash
-   # Install Docker Compose
-   sudo apt install docker-compose -y
-   ```
-
-3. **Enable IP Forwarding**
+###  **1. Enable IP Forwarding**
    WireGuard requires IP forwarding. Enable it permanently by modifying the system configuration:
    ```bash
    echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
@@ -86,9 +39,10 @@ Follow these steps to deploy the WireGuard VPN server using the provided `docker
    - Replace `SERVERURL` with your server’s public IP address or domain name.
    - Adjust `SERVERPORT` if necessary (default is `51820`).
 
+#### Note: Change other settings in the docker-compose.yml as your needs.
 ---
 
-### **3. Deploy the WireGuard Container**
+### **3. Deploy the WireGuard Container for VPN Server**
 
 1. **Launch the Container**
    Use Docker Compose to start the WireGuard server:
@@ -139,13 +93,26 @@ Follow these steps to deploy the WireGuard VPN server using the provided `docker
      Download and install the WireGuard client from [WireGuard’s website](https://www.wireguard.com/install/).
 
 2. **Import the Configuration**
-   Use the client configuration file (`peerX.conf`) to set up the connection on your device.
+   Use the client configuration file (`peerX.conf`) to set up the connection on your device. This file should be in the `/etc/wireguard` directory.
    ```bash
    sudo wg-quick up peerX.conf
    ```
+3. **Auto Startup at System Reboot (Necassary if you have access only through VPN to you systems.).**
+   Just execute the command below to execute the client side (peer) VPN as a service:
+   ```bash
+   sudo systemctl enable wg-quick@peerX
+   sudo systemctl start wg-quick@peerX
+   ```
 
-4. **Connect to the VPN**
-   Start the VPN connection using the client app.
+   #### Note: If a VPN is previously set, stop it using the command below:
+   ```bash
+   sudo wg-quick down peerX
+   ```
+
+5. **Check Connection to the VPN**
+   ```bash
+   sudo wg show
+   ```
 
 ---
 
