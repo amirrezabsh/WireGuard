@@ -12,7 +12,7 @@ Follow these steps to deploy the WireGuard VPN server using the provided `docker
    sudo apt update && sudo apt upgrade -y
    ```
 
-2. **Install Docker and Docker Compose**
+2. **Install Docker and Docker Compose** (on VPN server only!)
    #### Step 1: Install Docker
    Follow the official Docker documentation to install Docker on Ubuntu:
    [Docker Installation Guide for Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
