@@ -118,8 +118,11 @@ Follow these steps to deploy the WireGuard VPN server using the provided `docker
 2. **Download Configs**
    Use `scp` or another method to transfer the client configuration files to your client devices:
    ```bash
-   scp ~/wireguard/config/peer1/peer1.conf user@client-machine:/path/to/save/
+   scp ~/wireguard/config/peerX/peerX.conf user@client-machine:/etc/wireguard/
    ```
+   Or just create a new file named wg0.conf or peer.conf and paste the context in there!
+
+   ##### Note: Edit the AllowedIPs field in the configuration file. If you let it be 0.0.0.0 it will route all your traffic through VPN. If you only need it for maintenance purposes, change it to you VPN server IP range (e.g. 10.13.13.0/24).
 
 ---
 
@@ -137,8 +140,11 @@ Follow these steps to deploy the WireGuard VPN server using the provided `docker
 
 2. **Import the Configuration**
    Use the client configuration file (`peerX.conf`) to set up the connection on your device.
+   ```bash
+   sudo wg-quick up peerX.conf
+   ```
 
-3. **Connect to the VPN**
+4. **Connect to the VPN**
    Start the VPN connection using the client app.
 
 ---
