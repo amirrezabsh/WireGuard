@@ -13,44 +13,44 @@ Follow these steps to deploy the WireGuard VPN server using the provided `docker
    ```
 
 2. **Install Docker and Docker Compose**
-## Step 1: Install Docker
-Follow the official Docker documentation to install Docker on Ubuntu:
-[Docker Installation Guide for Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
+   #### Step 1: Install Docker
+   Follow the official Docker documentation to install Docker on Ubuntu:
+   [Docker Installation Guide for Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
 
-Alternatively, you can install Docker with the following commands:
-```bash
-sudo apt-get install ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
+   Alternatively, you can install Docker with the following commands:
+   ```bash
+   sudo apt-get install ca-certificates curl
+   sudo install -m 0755 -d /etc/apt/keyrings
+   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+   sudo chmod a+r /etc/apt/keyrings/docker.asc
+   
+   # Add the repository to Apt sources:
+   echo \
+     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+     $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+   sudo apt-get update
+   ```
 
-# Add the repository to Apt sources:
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-```
-
-## Step 2: Install the Docker packages.
-To install the latest version, run:
-```bash
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-```
-
-Verify that the installation is successful by running the `hello-world` image:
-```bash
-sudo docker run hello-world
-```
+   #### Step 2: Install the Docker packages.
+   To install the latest version, run:
+   ```bash
+   sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+   ```
+   
+   Verify that the installation is successful by running the `hello-world` image:
+   ```bash
+   sudo docker run hello-world
+   ```
 
 
-## Step 3: Install docker-compose:
-```bash
-# Install Docker Compose
-sudo apt install docker-compose -y
-```
+   #### Step 3: Install docker-compose:
+   ```bash
+   # Install Docker Compose
+   sudo apt install docker-compose -y
+   ```
 
-4. **Enable IP Forwarding**
+3. **Enable IP Forwarding**
    WireGuard requires IP forwarding. Enable it permanently by modifying the system configuration:
    ```bash
    echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
