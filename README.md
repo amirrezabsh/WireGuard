@@ -16,7 +16,7 @@ Follow these steps to deploy the WireGuard VPN server using the provided `docker
    If Docker and Docker Compose are not installed, install them:
    ```bash
    # Install Docker
-   # [Search Docker Install on Ubuntu and install from official website]
+   # [Search "Docker Install on Ubuntu" and install from official website]
 
    # Install Docker Compose
    sudo apt install docker-compose -y
