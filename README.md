@@ -104,7 +104,7 @@ Follow these steps to deploy the WireGuard VPN server using the provided `docker
 2. **Import the Configuration**
    Use the client configuration file (`peerX.conf`) to set up the connection on your device. This file should be in the `/etc/wireguard` directory.
    ```bash
-   sudo wg-quick up peerX.conf
+   sudo wg-quick up peerX
    ```
 3. **Auto Startup at System Reboot (Necassary if you have access only through VPN to you systems.).**
    Just execute the command below to execute the client side (peer) VPN as a service:
